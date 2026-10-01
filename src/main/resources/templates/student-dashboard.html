@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Dashboard - CampusShield</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+        }
+
+        .navbar {
+            background: #12355b;
+            color: white;
+            padding: 18px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .logout {
+            color: white;
+            text-decoration: none;
+            background: #d9534f;
+            padding: 9px 16px;
+            border-radius: 5px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 40px auto;
+        }
+
+        .welcome h1 {
+            color: #12355b;
+            margin-bottom: 8px;
+        }
+
+        .welcome p {
+            color: #555;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .card h2 {
+            color: #12355b;
+            margin-top: 0;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 12px 18px;
+            background: #12355b;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .incidents {
+            margin-top: 35px;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .incidents h2 {
+            color: #12355b;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th {
+            background: #12355b;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+
+        /* WEATHER */
+
+        .weather {
+            margin-top: 35px;
+            background: white;
+            padding: 28px;
+            border-radius: 14px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .weather-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .weather-header h2 {
+            color: #12355b;
+            margin: 0;
+        }
+
+        .weather-location {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .weather-main {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin: 10px 0 20px;
+        }
+
+        .weather-icon {
+            font-size: 65px;
+        }
+
+        .temperature {
+            font-size: 48px;
+            font-weight: bold;
+            color: #12355b;
+        }
+
+        .condition {
+            color: #666;
+            font-size: 17px;
+            margin-top: 3px;
+        }
+
+        .weather-message {
+            background: #eef4ff;
+            border-left: 5px solid #2563eb;
+            padding: 15px;
+            border-radius: 8px;
+            color: #12355b;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .weather-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .weather-detail {
+            background: #f7f9fc;
+            padding: 16px;
+            border-radius: 9px;
+            text-align: center;
+        }
+
+        .weather-detail-label {
+            color: #777;
+            font-size: 12px;
+            margin-bottom: 7px;
+        }
+
+        .weather-detail-value {
+            color: #12355b;
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .weather-error {
+            background: #fff1f2;
+            color: #be123c;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 800px) {
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .weather-details {
+                grid-template-columns: 1fr;
+            }
+
+            .weather-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+
+            table {
+                font-size: 13px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <div class="logo">
+        CampusShield
+    </div>
+
+    <a href="/login" class="logout">
+        Logout
+    </a>
+
+</div>
+
+
+<div class="container">
+
+    <div class="welcome">
+
+        <h1>
+            Welcome, <span th:text="${userName}">Student</span>!
+        </h1>
+
+        <p>
+            Manage your campus incident reports from here.
+        </p>
+
+    </div>
+
+
+    <div class="cards">
+
+        <div class="card">
+
+            <h2>🚨 Report Incident</h2>
+
+            <p>
+                Report a medical emergency, fire, security issue,
+                accident, or other campus incident.
+            </p>
+
+            <a href="/report" class="button">
+                Report Incident
+            </a>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>📋 My Incidents</h2>
+
+            <p>
+                View the incidents you have reported and track
+                their current status.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>ℹ️ Emergency Help</h2>
+
+            <p>
+                Use CampusShield to report emergencies and provide
+                important incident information to campus authorities.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="incidents">
+
+        <h2>📋 My Reported Incidents</h2>
+
+        <div th:if="${#lists.isEmpty(incidents)}">
+
+            <p>
+                You have not reported any incidents yet.
+            </p>
+
+        </div>
+
+
+        <table th:unless="${#lists.isEmpty(incidents)}">
+
+            <thead>
+
+            <tr>
+                <th>ID</th>
+                <th>Category</th>
+                <th>Location</th>
+                <th>Severity</th>
+                <th>Status</th>
+                <th>Reported At</th>
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <tr th:each="incident : ${incidents}">
+
+                <td th:text="${incident.incidentId}">
+                    1
+                </td>
+
+                <td th:text="${incident.category}">
+                    Fire
+                </td>
+
+                <td th:text="${incident.location}">
+                    Main Building
+                </td>
+
+                <td th:text="${incident.severity}">
+                    HIGH
+                </td>
+
+                <td class="status"
+                    th:text="${incident.status}">
+                    REPORTED
+                </td>
+
+                <td th:text="${incident.createdAt}">
+                    2026-09-21
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <!-- WEATHER CARD -->
+
+    <div class="weather">
+
+        <div th:if="${weatherAvailable}">
+
+            <div class="weather-header">
+
+                <h2>
+                    🌦️ Campus Weather
+                </h2>
+
+                <div class="weather-location">
+
+                    📍
+                    <span th:text="${weatherCity}">
+                        Chennai
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="weather-main">
+
+                <div class="weather-icon"
+                     th:text="${weatherIcon}">
+                    ☁️
+                </div>
+
+                <div>
+
+                    <div class="temperature">
+
+                        <span th:text="${#numbers.formatDecimal(weatherTemperature, 1, 1)}">
+                            35.5
+                        </span>°C
+
+                    </div>
+
+                    <div class="condition"
+                         th:text="${weatherCondition}">
+
+                        Overcast clouds
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="weather-message"
+                 th:text="${weatherMessage}">
+
+                🔥 Sun chose violence today. 🥵🔥
+                Grab water + an umbrella.
+
+            </div>
+
+
+            <div class="weather-details">
+
+                <div class="weather-detail">
+
+                    <div class="weather-detail-label">
+                        FEELS LIKE
+                    </div>
+
+                    <div class="weather-detail-value">
+
+                        <span th:text="${#numbers.formatDecimal(weatherFeelsLike, 1, 1)}">
+                            42.5
+                        </span>°C
+
+                    </div>
+
+                </div>
+
+
+                <div class="weather-detail">
+
+                    <div class="weather-detail-label">
+                        HUMIDITY
+                    </div>
+
+                    <div class="weather-detail-value">
+
+                        <span th:text="${weatherHumidity}">
+                            55
+                        </span>%
+
+                    </div>
+
+                </div>
+
+
+                <div class="weather-detail">
+
+                    <div class="weather-detail-label">
+                        WIND
+                    </div>
+
+                    <div class="weather-detail-value">
+
+                        <span th:text="${#numbers.formatDecimal(weatherWindSpeed, 1, 1)}">
+                            6.5
+                        </span> m/s
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div th:unless="${weatherAvailable}"
+             class="weather-error">
+
+            🌦️
+            <span th:text="${weatherError}">
+                Weather information is temporarily unavailable.
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

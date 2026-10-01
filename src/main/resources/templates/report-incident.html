@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Incident - CampusShield</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+        }
+
+        .navbar {
+            background: #12355b;
+            color: white;
+            padding: 18px 50px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 600px;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            color: #12355b;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            margin-top: 25px;
+            padding: 15px;
+            background: #12355b;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #0d2845;
+        }
+
+        .back {
+            display: block;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+    CampusShield
+</div>
+
+<div class="container">
+
+    <h1>Report an Incident</h1>
+
+    <form action="/report" method="POST">
+
+        <label>Incident Category</label>
+
+        <select name="category">
+            <option value="Medical Emergency">Medical Emergency</option>
+            <option value="Fire">Fire</option>
+            <option value="Security Issue">Security Issue</option>
+            <option value="Accident">Accident</option>
+            <option value="Other">Other</option>
+        </select>
+
+        <label>Description</label>
+
+        <textarea name="description"
+                  placeholder="Describe what happened..."></textarea>
+
+        <label>Location</label>
+
+        <input type="text"
+               name="location"
+               placeholder="Example: CEG Main Building">
+
+        <label>Severity</label>
+
+        <select name="severity">
+            <option value="LOW">Low</option>
+            <option value="MEDIUM">Medium</option>
+            <option value="HIGH">High</option>
+            <option value="CRITICAL">Critical</option>
+        </select>
+
+        <button type="submit">
+            Submit Incident
+        </button>
+
+    </form>
+
+    <a href="/" class="back">← Back to Home</a>
+
+</div>
+
+</body>
+</html>

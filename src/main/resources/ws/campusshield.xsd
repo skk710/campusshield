@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://campusshield.com/soap"
+        xmlns:tns="http://campusshield.com/soap"
+        elementFormDefault="qualified">
+
+    <!-- GET INCIDENT BY ID -->
+
+    <xs:element name="getIncidentByIdRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="incidentId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getIncidentByIdResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="incidentId" type="xs:long"/>
+                <xs:element name="category" type="xs:string"/>
+                <xs:element name="description" type="xs:string"/>
+                <xs:element name="location" type="xs:string"/>
+                <xs:element name="severity" type="xs:string"/>
+                <xs:element name="status" type="xs:string"/>
+                <xs:element name="reportedAt" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <!-- GET STUDENT INCIDENTS -->
+
+    <xs:element name="getStudentIncidentsRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getStudentIncidentsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="incidents"
+                            minOccurs="0"
+                            maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="incidentId" type="xs:long"/>
+                            <xs:element name="category" type="xs:string"/>
+                            <xs:element name="description" type="xs:string"/>
+                            <xs:element name="location" type="xs:string"/>
+                            <xs:element name="severity" type="xs:string"/>
+                            <xs:element name="status" type="xs:string"/>
+                            <xs:element name="reportedAt" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <!-- UPDATE INCIDENT STATUS -->
+
+    <xs:element name="updateIncidentStatusRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="incidentId" type="xs:long"/>
+                <xs:element name="status" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="updateIncidentStatusResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="success" type="xs:boolean"/>
+                <xs:element name="message" type="xs:string"/>
+                <xs:element name="incidentId" type="xs:long"/>
+                <xs:element name="status" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <!-- ASSIGN OFFICER -->
+
+    <xs:element name="assignOfficerRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="incidentId" type="xs:long"/>
+                <xs:element name="officerId" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="assignOfficerResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="success" type="xs:boolean"/>
+                <xs:element name="message" type="xs:string"/>
+                <xs:element name="incidentId" type="xs:long"/>
+                <xs:element name="officerId" type="xs:long"/>
+                <xs:element name="status" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <!-- GET INCIDENT STATISTICS -->
+
+    <xs:element name="getIncidentStatisticsRequest">
+        <xs:complexType>
+            <xs:sequence/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getIncidentStatisticsResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="totalIncidents" type="xs:long"/>
+                <xs:element name="reported" type="xs:long"/>
+                <xs:element name="assigned" type="xs:long"/>
+                <xs:element name="inProgress" type="xs:long"/>
+                <xs:element name="resolved" type="xs:long"/>
+                <xs:element name="closed" type="xs:long"/>
+                <xs:element name="highSeverity" type="xs:long"/>
+                <xs:element name="criticalSeverity" type="xs:long"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <!-- REPORT INCIDENT -->
+
+    <xs:element name="reportIncidentRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="userId" type="xs:long"/>
+                <xs:element name="category" type="xs:string"/>
+                <xs:element name="description" type="xs:string"/>
+                <xs:element name="location" type="xs:string"/>
+                <xs:element name="severity" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="reportIncidentResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="success" type="xs:boolean"/>
+                <xs:element name="message" type="xs:string"/>
+                <xs:element name="incidentId" type="xs:long"/>
+                <xs:element name="status" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
