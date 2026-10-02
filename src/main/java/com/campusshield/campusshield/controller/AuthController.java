@@ -33,10 +33,9 @@ public class AuthController {
             @RequestParam String password,
             @RequestParam String role) {
 
-        // Temporarily allow ADMIN registration for cloud testing.
+        // ADMIN accounts cannot be created through public registration.
         if (!role.equals("STUDENT")
-                && !role.equals("OFFICER")
-                && !role.equals("ADMIN")) {
+                && !role.equals("OFFICER")) {
 
             return "redirect:/register?error=invalid-role";
         }
