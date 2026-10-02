@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Controller
 public class OfficerAssignmentController {
@@ -32,44 +33,74 @@ public class OfficerAssignmentController {
 
     @PostMapping("/assign-officer")
     public String assignOfficer(
-            @RequestParam Long incidentId,
-            @RequestParam Long officerId,
+            @RequestParam("incidentId") Long incidentId,
+            @RequestParam("officerId") Long officerId,
             HttpSession session) {
 
-        // Make sure the logged-in user is an officer
-        String role = (String) session.getAttribute("userRole");
+        String role =
+                (String) session.getAttribute("userRole");
 
-        if (role == null || !role.equals("OFFICER")) {
+        // Only ADMIN can assign officers.
+        if (role == null || !"ADMIN".equals(role)) {
             return "redirect:/login";
         }
 
-        // Find the incident
         Incident incident =
-                incidentRepository.findById(incidentId).orElse(null);
+                incidentRepository
+                        .findById(incidentId)
+                        .orElse(null);
 
-        // Find the selected officer
         User officer =
-                userRepository.findById(officerId).orElse(null);
+                userRepository
+                        .findById(officerId)
+                        .orElse(null);
 
         if (incident == null || officer == null) {
-            return "redirect:/officer-dashboard";
+            return "redirect:/admin-dashboard";
         }
 
-        // Create assignment
-        OfficerAssignment assignment = new OfficerAssignment();
+        // Selected user must actually be an officer.
+        if (!"OFFICER".equals(officer.getRole())) {
+            return "redirect:/admin-dashboard";
+        }
+
+        // Only REPORTED incidents can receive a new assignment.
+        if (!"REPORTED".equals(incident.getStatus())) {
+            return "redirect:/admin-dashboard";
+        }
+
+        /*
+         * Prevent duplicate assignment.
+         *
+         * If this incident already has an assignment,
+         * do not create another one.
+         */
+        List<OfficerAssignment> existingAssignments =
+                assignmentRepository
+                        .findByIncident_IncidentId(incidentId);
+
+        if (existingAssignments != null
+                && !existingAssignments.isEmpty()) {
+
+            return "redirect:/admin-dashboard";
+        }
+
+        OfficerAssignment assignment =
+                new OfficerAssignment();
 
         assignment.setIncident(incident);
         assignment.setOfficer(officer);
-        assignment.setAssignmentTime(LocalDateTime.now());
+        assignment.setAssignmentTime(
+                LocalDateTime.now()
+        );
         assignment.setResponseNotes(null);
 
-        // Save assignment
         assignmentRepository.save(assignment);
 
-        // Update incident status
         incident.setStatus("ASSIGNED");
+
         incidentRepository.save(incident);
 
-        return "redirect:/officer-dashboard";
+        return "redirect:/admin-dashboard";
     }
 }

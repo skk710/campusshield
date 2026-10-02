@@ -73,12 +73,12 @@ public class AuthController {
             @RequestParam String password,
             HttpSession session) {
 
-        User user =
-                userRepository
-                        .findByEmail(email)
-                        .orElse(null);
+        User user = userRepository
+                .findByEmail(email)
+                .orElse(null);
 
         if (user != null
+                && user.getPasswordHash() != null
                 && passwordEncoder.matches(
                         password,
                         user.getPasswordHash())) {
@@ -98,15 +98,15 @@ public class AuthController {
                     user.getRole()
             );
 
-            if (user.getRole().equals("STUDENT")) {
+            if ("STUDENT".equals(user.getRole())) {
                 return "redirect:/student-dashboard";
             }
 
-            if (user.getRole().equals("OFFICER")) {
+            if ("OFFICER".equals(user.getRole())) {
                 return "redirect:/officer-dashboard";
             }
 
-            if (user.getRole().equals("ADMIN")) {
+            if ("ADMIN".equals(user.getRole())) {
                 return "redirect:/admin-dashboard";
             }
         }

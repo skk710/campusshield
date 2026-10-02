@@ -1,132 +1,420 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Register - CampusShield</title>
+    <title>Register | CampusShield</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
+            min-height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+
+            background:
+                linear-gradient(135deg, #11151a, #202832);
+
+            color: #1b2028;
+
+            display: flex;
+            flex-direction: column;
         }
 
         .navbar {
-            background: #12355b;
+            height: 74px;
+            padding: 0 7%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            background: #11151a;
             color: white;
-            padding: 18px 50px;
-            font-size: 24px;
-            font-weight: bold;
+
+            border-bottom: 1px solid #292f37;
         }
 
-        .container {
-            width: 450px;
-            margin: 60px auto;
-            background: white;
-            padding: 35px;
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            font-size: 21px;
+            font-weight: 800;
+        }
+
+        .shield {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #e53935;
+            color: white;
+
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+
+            font-size: 14px;
+            font-weight: 900;
+        }
+
+        .back-home {
+            color: #aeb7c3;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .back-home:hover {
+            color: white;
+        }
+
+        .page {
+            flex: 1;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 45px 20px;
+        }
+
+        .register-card {
+            width: 100%;
+            max-width: 500px;
+
+            background: white;
+
+            padding: 45px;
+
+            border-radius: 18px;
+
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.35);
+        }
+
+        .heading {
+            text-align: center;
+        }
+
+        .heading .icon {
+            width: 52px;
+            height: 52px;
+
+            margin: auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #fff0ef;
+            color: #e53935;
+
+            border-radius: 14px;
+
+            font-size: 24px;
         }
 
         h1 {
-            color: #12355b;
-            text-align: center;
+            margin: 18px 0 8px;
+
+            color: #171c23;
+
+            font-size: 30px;
+        }
+
+        .subtitle {
+            color: #7a8491;
+            font-size: 14px;
+        }
+
+        form {
+            margin-top: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
         }
 
         label {
             display: block;
-            margin-top: 18px;
-            margin-bottom: 6px;
-            font-weight: bold;
+
+            margin-bottom: 7px;
+
+            color: #303741;
+
+            font-size: 13px;
+            font-weight: 700;
         }
 
-        input, select {
+        input,
+        select {
             width: 100%;
-            padding: 11px;
-            box-sizing: border-box;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
+
+            padding: 13px 14px;
+
+            border: 1px solid #d6dce3;
+            border-radius: 8px;
+
+            background: #fafbfc;
+
+            color: #171c23;
+
+            font-size: 14px;
+
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #3b82f6;
+
+            background: white;
+
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
         button {
             width: 100%;
-            margin-top: 25px;
+
+            margin-top: 5px;
+
             padding: 14px;
-            background: #12355b;
-            color: white;
+
             border: none;
-            border-radius: 6px;
-            font-size: 16px;
+            border-radius: 8px;
+
+            background: #e53935;
+            color: white;
+
+            font-size: 15px;
+            font-weight: 700;
+
             cursor: pointer;
+
+            transition: 0.2s;
         }
 
         button:hover {
-            background: #0d2845;
+            background: #f04440;
+            transform: translateY(-1px);
         }
 
         .login-link {
+            margin-top: 24px;
+            padding-top: 20px;
+
+            border-top: 1px solid #edf0f3;
+
             text-align: center;
-            margin-top: 20px;
+
+            color: #7a8491;
+
+            font-size: 13px;
         }
 
         .login-link a {
-            color: #12355b;
+            color: #e53935;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .notice {
+            margin-top: 18px;
+
+            padding: 11px 13px;
+
+            background: #f4f7fa;
+
+            border-radius: 7px;
+
+            color: #697482;
+
+            font-size: 11px;
+
+            line-height: 1.5;
+        }
+
+        footer {
+            padding: 20px;
+
+            background: #11151a;
+
+            color: #737d89;
+
+            text-align: center;
+
+            font-size: 11px;
+        }
+
+        footer strong {
+            color: #dce1e7;
+        }
+
+        @media (max-width: 550px) {
+            .register-card {
+                padding: 32px 25px;
+            }
+
+            .navbar {
+                padding: 0 5%;
+            }
         }
     </style>
 </head>
 
 <body>
 
-<div class="navbar">
-    CampusShield
-</div>
+<nav class="navbar">
 
-<div class="container">
-
-    <h1>Create Account</h1>
-
-    <form action="/register" method="POST">
-
-        <label for="name">Name</label>
-        <input type="text"
-               id="name"
-               name="name"
-               placeholder="Enter your name"
-               required>
-
-        <label for="email">Email</label>
-        <input type="email"
-               id="email"
-               name="email"
-               placeholder="Enter your email"
-               required>
-
-        <label for="password">Password</label>
-        <input type="password"
-               id="password"
-               name="password"
-               placeholder="Enter your password"
-               required>
-
-        <label for="role">Role</label>
-        <select id="role" name="role" required>
-            <option value="STUDENT">Student</option>
-            <option value="OFFICER">Security Officer</option>
-            <option value="ADMIN">Admin</option>
-        </select>
-
-        <button type="submit">Create Account</button>
-
-    </form>
-
-    <div class="login-link">
-        Already have an account?
-        <a href="/login">Login</a>
+    <div class="brand">
+        <div class="shield">CS</div>
+        CampusShield
     </div>
 
-</div>
+    <a href="/" class="back-home">
+        ← Back to Home
+    </a>
+
+</nav>
+
+
+<main class="page">
+
+    <div class="register-card">
+
+        <div class="heading">
+
+            <div class="icon">
+                🛡️
+            </div>
+
+            <h1>Create Account</h1>
+
+            <div class="subtitle">
+                Join the CampusShield safety platform.
+            </div>
+
+        </div>
+
+
+        <form action="/register" method="POST">
+
+
+            <div class="form-group">
+
+                <label for="name">
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter your name"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="email">
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="you@example.com"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Create a password"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="role">
+                    Account Type
+                </label>
+
+                <select id="role" name="role" required>
+
+                    <option value="" disabled selected>
+                        Select account type
+                    </option>
+
+                    <option value="STUDENT">
+                        Student
+                    </option>
+
+                    <option value="OFFICER">
+                        Security Officer
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button type="submit">
+                Create Account
+            </button>
+
+        </form>
+
+
+        <div class="notice">
+            🔐 Passwords are protected using BCrypt hashing.
+            Administrator accounts are managed separately.
+        </div>
+
+
+        <div class="login-link">
+
+            Already have an account?
+
+            <a href="/login">
+                Sign In
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer>
+
+    <strong>CampusShield</strong>
+    · College of Engineering, Guindy · Anna University
+
+</footer>
 
 </body>
 </html>

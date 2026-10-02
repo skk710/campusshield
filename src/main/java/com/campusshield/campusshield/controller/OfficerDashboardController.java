@@ -1,28 +1,27 @@
 package com.campusshield.campusshield.controller;
 
 import com.campusshield.campusshield.entity.Incident;
-import com.campusshield.campusshield.entity.User;
-import com.campusshield.campusshield.repository.IncidentRepository;
-import com.campusshield.campusshield.repository.UserRepository;
+import com.campusshield.campusshield.entity.OfficerAssignment;
+import com.campusshield.campusshield.repository.OfficerAssignmentRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class OfficerDashboardController {
 
-    private final IncidentRepository incidentRepository;
-    private final UserRepository userRepository;
+    private final OfficerAssignmentRepository assignmentRepository;
 
     public OfficerDashboardController(
-            IncidentRepository incidentRepository,
-            UserRepository userRepository) {
+            OfficerAssignmentRepository assignmentRepository) {
 
-        this.incidentRepository = incidentRepository;
-        this.userRepository = userRepository;
+        this.assignmentRepository = assignmentRepository;
     }
 
     @GetMapping("/officer-dashboard")
@@ -30,21 +29,78 @@ public class OfficerDashboardController {
             HttpSession session,
             Model model) {
 
-        String role = (String) session.getAttribute("userRole");
+        String role =
+                (String) session.getAttribute("userRole");
 
-        if (role == null || !role.equals("OFFICER")) {
+        // Only OFFICER can access this dashboard.
+        if (role == null || !"OFFICER".equals(role)) {
             return "redirect:/login";
         }
 
-        List<Incident> incidents = incidentRepository.findAll();
+        Long officerId =
+                (Long) session.getAttribute("userId");
 
-        List<User> officers = userRepository.findByRole("OFFICER");
+        if (officerId == null) {
+            return "redirect:/login";
+        }
 
-        String userName = (String) session.getAttribute("userName");
+        /*
+         * Get assignments belonging to
+         * the currently logged-in officer.
+         */
+        List<OfficerAssignment> assignments =
+                assignmentRepository
+                        .findByOfficer_UserId(officerId);
 
-        model.addAttribute("userName", userName);
-        model.addAttribute("incidents", incidents);
-        model.addAttribute("officers", officers);
+        /*
+         * Use a LinkedHashMap so that:
+         *
+         * 1. The original order is preserved.
+         * 2. The same incident cannot appear twice.
+         */
+        Map<Long, Incident> uniqueIncidents =
+                new LinkedHashMap<>();
+
+        for (OfficerAssignment assignment : assignments) {
+
+            if (assignment == null) {
+                continue;
+            }
+
+            Incident incident =
+                    assignment.getIncident();
+
+            if (incident == null) {
+                continue;
+            }
+
+            Long incidentId =
+                    incident.getIncidentId();
+
+            if (incidentId == null) {
+                continue;
+            }
+
+            uniqueIncidents.putIfAbsent(
+                    incidentId,
+                    incident
+            );
+        }
+
+        List<Incident> incidents =
+                new ArrayList<>(
+                        uniqueIncidents.values()
+                );
+
+        model.addAttribute(
+                "userName",
+                session.getAttribute("userName")
+        );
+
+        model.addAttribute(
+                "incidents",
+                incidents
+        );
 
         return "officer-dashboard";
     }

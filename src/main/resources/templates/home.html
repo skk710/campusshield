@@ -1,77 +1,1108 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>CampusShield</title>
+    <title>CampusShield | Smart Campus Safety</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
-            color: #1f2937;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f7fa;
+            color: #1b2028;
         }
+
+        /* ================= NAVBAR ================= */
 
         .navbar {
-            background: #12355b;
+            height: 74px;
+            padding: 0 7%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            background: #11151a;
             color: white;
-            padding: 18px 50px;
-            font-size: 24px;
-            font-weight: bold;
+
+            border-bottom: 1px solid #292e35;
         }
 
-        .container {
-            max-width: 1000px;
-            margin: 80px auto;
-            text-align: center;
-            padding: 20px;
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            font-size: 21px;
+            font-weight: 800;
         }
 
-        h1 {
-            font-size: 48px;
-            margin-bottom: 10px;
-            color: #12355b;
-        }
+        .shield {
+            width: 38px;
+            height: 38px;
 
-        p {
-            font-size: 18px;
-            color: #64748b;
-        }
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
-        .button {
-            display: inline-block;
-            margin-top: 25px;
-            padding: 14px 28px;
-            background: #12355b;
+            background: #e53935;
             color: white;
+
+            border-radius: 10px;
+
+            font-size: 14px;
+            font-weight: 900;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            color: #c8ced7;
             text-decoration: none;
-            border-radius: 8px;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            transition: 0.2s;
         }
 
-        .button:hover {
-            background: #0d2845;
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .login-btn {
+            padding: 10px 19px;
+
+            background: white;
+            color: #11151a !important;
+
+            border-radius: 7px;
+        }
+
+        .login-btn:hover {
+            background: #e9edf2;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            min-height: 670px;
+
+            background: #11151a;
+
+            padding: 70px 7%;
+
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-content {
+            width: 100%;
+            max-width: 1250px;
+
+            margin: auto;
+
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+
+            gap: 70px;
+
+            align-items: center;
+        }
+
+        .hero-text {
+            color: white;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            color: #ff625e;
+
+            font-size: 12px;
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 18px;
+        }
+
+        .eyebrow::before {
+            content: "";
+
+            width: 26px;
+            height: 2px;
+
+            background: #e53935;
+        }
+
+        .hero h1 {
+            margin: 0;
+
+            font-size: clamp(45px, 5vw, 70px);
+
+            line-height: 1.03;
+
+            letter-spacing: -2.5px;
+        }
+
+        .hero h1 span {
+            color: #ff514c;
+        }
+
+        .hero-description {
+            margin-top: 25px;
+
+            max-width: 590px;
+
+            color: #aeb7c3;
+
+            font-size: 17px;
+
+            line-height: 1.75;
+        }
+
+        .hero-buttons {
+            margin-top: 32px;
+
+            display: flex;
+
+            gap: 13px;
+
+            flex-wrap: wrap;
+        }
+
+        .primary-btn,
+        .secondary-btn {
+            display: inline-block;
+
+            padding: 14px 22px;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            font-weight: 700;
+
+            transition: 0.2s;
+        }
+
+        .primary-btn {
+            background: #e53935;
+
+            color: white;
+
+            box-shadow: 0 8px 25px rgba(229, 57, 53, 0.25);
+        }
+
+        .primary-btn:hover {
+            background: #f04440;
+
+            transform: translateY(-2px);
+        }
+
+        .secondary-btn {
+            border: 1px solid #414852;
+
+            color: #e3e7ec;
+        }
+
+        .secondary-btn:hover {
+            border-color: #8b949e;
+
+            background: #1b2027;
+        }
+
+        .campus-info {
+            margin-top: 30px;
+
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            color: #8994a2;
+
+            font-size: 13px;
+        }
+
+        .blue-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+
+            background: #3b82f6;
+        }
+
+        /* ================= HERO IMAGE ================= */
+
+        .hero-image {
+            position: relative;
+
+            height: 500px;
+
+            border-radius: 18px;
+
+            overflow: hidden;
+
+            border: 1px solid #343a42;
+
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.35);
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+        }
+
+        .image-overlay {
+            position: absolute;
+
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(0, 0, 0, 0.02),
+                    rgba(0, 0, 0, 0.55)
+                );
+        }
+
+        .image-label {
+            position: absolute;
+
+            left: 22px;
+            bottom: 22px;
+
+            padding: 11px 15px;
+
+            background: rgba(17, 21, 26, 0.92);
+
+            color: white;
+
+            border-radius: 6px;
+
+            border-left: 3px solid #e53935;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            letter-spacing: 0.5px;
+        }
+
+        /* ================= TRUST BAR ================= */
+
+        .trust-bar {
+            background: white;
+
+            border-bottom: 1px solid #e4e8ed;
+
+            padding: 23px 7%;
+        }
+
+        .trust-inner {
+            max-width: 1100px;
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            text-align: center;
+        }
+
+        .trust-item {
+            padding: 8px;
+
+            border-right: 1px solid #e1e5ea;
+        }
+
+        .trust-item:last-child {
+            border-right: none;
+        }
+
+        .trust-number {
+            color: #202731;
+
+            font-size: 17px;
+
+            font-weight: 800;
+        }
+
+        .trust-label {
+            margin-top: 5px;
+
+            color: #7a8491;
+
+            font-size: 12px;
+        }
+
+        /* ================= FEATURES ================= */
+
+        .features {
+            padding: 95px 7%;
+
+            background: #f5f7fa;
+        }
+
+        .section-heading {
+            max-width: 700px;
+
+            margin: auto;
+
+            text-align: center;
+        }
+
+        .section-heading .eyebrow {
+            color: #e53935;
+        }
+
+        .section-heading h2 {
+            margin: 8px 0 14px;
+
+            color: #151a21;
+
+            font-size: 42px;
+
+            letter-spacing: -1px;
+        }
+
+        .section-heading p {
+            color: #6c7683;
+
+            font-size: 16px;
+
+            line-height: 1.7;
+        }
+
+        .feature-grid {
+            max-width: 1100px;
+
+            margin: 55px auto 0;
+
+            display: grid;
+
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 18px;
+        }
+
+        .feature-card {
+            background: white;
+
+            padding: 28px 24px;
+
+            border: 1px solid #e3e7ec;
+
+            border-radius: 13px;
+
+            transition: 0.25s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+
+            border-color: #cfd5dc;
+
+            box-shadow: 0 15px 35px rgba(20, 28, 38, 0.08);
+        }
+
+        .feature-icon {
+            width: 46px;
+            height: 46px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #f2f5f8;
+
+            border-radius: 10px;
+
+            font-size: 21px;
+
+            margin-bottom: 20px;
+        }
+
+        .feature-card:first-child .feature-icon {
+            background: #fff0ef;
+        }
+
+        .feature-card h3 {
+            margin: 0 0 9px;
+
+            color: #171c23;
+
+            font-size: 17px;
+        }
+
+        .feature-card p {
+            margin: 0;
+
+            color: #737e8b;
+
+            font-size: 14px;
+
+            line-height: 1.65;
+        }
+
+        /* ================= CAMPUS SECTION ================= */
+
+        .campus-section {
+            padding: 95px 7%;
+
+            background: white;
+        }
+
+        .campus-inner {
+            max-width: 1100px;
+
+            margin: auto;
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 70px;
+
+            align-items: center;
+        }
+
+        .campus-image {
+            width: 100%;
+            height: 410px;
+
+            object-fit: cover;
+
+            border-radius: 17px;
+
+            border: 1px solid #e0e4e9;
+
+            box-shadow: 0 20px 45px rgba(25, 32, 42, 0.10);
+        }
+
+        .campus-text .eyebrow {
+            color: #e53935;
+        }
+
+        .campus-text h2 {
+            margin: 0 0 20px;
+
+            color: #171c23;
+
+            font-size: 42px;
+
+            line-height: 1.1;
+
+            letter-spacing: -1px;
+        }
+
+        .campus-text p {
+            color: #697482;
+
+            font-size: 16px;
+
+            line-height: 1.8;
+        }
+
+        .campus-list {
+            list-style: none;
+
+            padding: 0;
+
+            margin-top: 25px;
+        }
+
+        .campus-list li {
+            margin: 14px 0;
+
+            color: #4d5763;
+
+            font-size: 14px;
+        }
+
+        .campus-list li::before {
+            content: "✓";
+
+            color: #e53935;
+
+            font-weight: bold;
+
+            margin-right: 10px;
+        }
+
+        /* ================= CTA ================= */
+
+        .cta {
+            padding: 80px 7%;
+
+            background: #eef3f8;
+
+            text-align: center;
+
+            border-top: 1px solid #e1e6ec;
+            border-bottom: 1px solid #e1e6ec;
+        }
+
+        .cta h2 {
+            margin: 0;
+
+            color: #151a21;
+
+            font-size: 40px;
+
+            letter-spacing: -1px;
+        }
+
+        .cta p {
+            max-width: 650px;
+
+            margin: 14px auto 28px;
+
+            color: #687381;
+
+            font-size: 16px;
+
+            line-height: 1.7;
+        }
+
+        .cta-btn {
+            display: inline-block;
+
+            padding: 14px 26px;
+
+            background: #e53935;
+
+            color: white;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            font-weight: 700;
+
+            box-shadow: 0 8px 22px rgba(229, 57, 53, 0.18);
+        }
+
+        .cta-btn:hover {
+            background: #f04440;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            padding: 30px 7%;
+
+            background: #11151a;
+
+            color: #7f8996;
+
+            text-align: center;
+
+            font-size: 12px;
+        }
+
+        footer strong {
+            color: #e6eaf0;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 900px) {
+
+            .hero-content,
+            .campus-inner {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 60px 5%;
+            }
+
+            .hero-text {
+                order: 1;
+            }
+
+            .hero-image {
+                order: 2;
+                height: 420px;
+            }
+
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .trust-inner {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .trust-item:nth-child(2) {
+                border-right: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 0 5%;
+            }
+
+            .nav-links a:not(.login-btn) {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 43px;
+            }
+
+            .hero-description {
+                font-size: 16px;
+            }
+
+            .hero-image {
+                height: 350px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .campus-text h2,
+            .section-heading h2 {
+                font-size: 34px;
+            }
+
+            .cta h2 {
+                font-size: 32px;
+            }
         }
     </style>
 </head>
 
+
 <body>
 
-<div class="navbar">
-    CampusShield
-</div>
 
-<div class="container">
+<!-- ================= NAVBAR ================= -->
 
-    <h1>Campus Emergency Assistance</h1>
+<nav class="navbar">
+
+    <div class="brand">
+
+        <div class="shield">
+            CS
+        </div>
+
+        CampusShield
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="#features">
+            Features
+        </a>
+
+        <a href="#campus">
+            Campus
+        </a>
+
+        <a href="/register">
+            Register
+        </a>
+
+        <a href="/login" class="login-btn">
+            Login
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+
+        <div class="hero-text">
+
+            <div class="eyebrow">
+                BUILT FOR CEG
+            </div>
+
+
+            <h1>
+                A safer campus.<br>
+                <span>One response system.</span>
+            </h1>
+
+
+            <p class="hero-description">
+
+                CampusShield brings emergency incident
+                reporting, officer response, live weather
+                information and administrative monitoring
+                together into one cloud-based platform.
+
+            </p>
+
+
+            <div class="hero-buttons">
+
+                <a href="/report" class="primary-btn">
+                    🚨 Report an Incident
+                </a>
+
+                <a href="/login" class="secondary-btn">
+                    Login to CampusShield
+                </a>
+
+            </div>
+
+
+            <div class="campus-info">
+
+                <div class="blue-dot"></div>
+
+                College of Engineering, Guindy · Anna University
+
+            </div>
+
+        </div>
+
+
+
+        <div class="hero-image">
+
+            <img
+                src="/images/ceg-campus.jpg"
+                alt="College of Engineering Guindy Campus">
+
+            <div class="image-overlay"></div>
+
+            <div class="image-label">
+                COLLEGE OF ENGINEERING, GUINDY
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= TECHNOLOGY BAR ================= -->
+
+<section class="trust-bar">
+
+    <div class="trust-inner">
+
+
+        <div class="trust-item">
+
+            <div class="trust-number">
+                SOAP
+            </div>
+
+            <div class="trust-label">
+                Web Service
+            </div>
+
+        </div>
+
+
+        <div class="trust-item">
+
+            <div class="trust-number">
+                PostgreSQL
+            </div>
+
+            <div class="trust-label">
+                Database
+            </div>
+
+        </div>
+
+
+        <div class="trust-item">
+
+            <div class="trust-number">
+                Render
+            </div>
+
+            <div class="trust-label">
+                Cloud Hosting
+            </div>
+
+        </div>
+
+
+        <div class="trust-item">
+
+            <div class="trust-number">
+                OpenWeather
+            </div>
+
+            <div class="trust-label">
+                External API
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= FEATURES ================= -->
+
+<section class="features" id="features">
+
+
+    <div class="section-heading">
+
+        <div class="eyebrow">
+            CAMPUSSHIELD PLATFORM
+        </div>
+
+        <h2>
+            Everything connected.
+        </h2>
+
+        <p>
+            One centralized platform connecting students,
+            officers and administrators during campus incidents.
+        </p>
+
+    </div>
+
+
+
+    <div class="feature-grid">
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                🚨
+            </div>
+
+            <h3>
+                Report Incidents
+            </h3>
+
+            <p>
+                Students can quickly report emergencies
+                with category, location, severity and
+                description.
+            </p>
+
+        </div>
+
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                👮
+            </div>
+
+            <h3>
+                Officer Response
+            </h3>
+
+            <p>
+                Officers can view incidents, take
+                responsibility and update the response
+                status.
+            </p>
+
+        </div>
+
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                🌦️
+            </div>
+
+            <h3>
+                Live Weather
+            </h3>
+
+            <p>
+                OpenWeather API provides current
+                weather information directly inside
+                the student dashboard.
+            </p>
+
+        </div>
+
+
+
+        <div class="feature-card">
+
+            <div class="feature-icon">
+                📊
+            </div>
+
+            <h3>
+                Admin Monitoring
+            </h3>
+
+            <p>
+                Administrators can monitor incident
+                statistics, severity levels and
+                response progress.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= CAMPUS ================= -->
+
+<section class="campus-section" id="campus">
+
+    <div class="campus-inner">
+
+
+        <img
+            class="campus-image"
+            src="/images/ceg-campus.jpg"
+            alt="College of Engineering Guindy Campus">
+
+
+        <div class="campus-text">
+
+            <div class="eyebrow">
+                DESIGNED FOR THE CAMPUS
+            </div>
+
+
+            <h2>
+                Built around the CEG campus environment.
+            </h2>
+
+
+            <p>
+                CampusShield is designed as a centralized
+                emergency assistance and incident management
+                platform for students, officers and administrators.
+            </p>
+
+
+            <ul class="campus-list">
+
+                <li>
+                    Student incident reporting
+                </li>
+
+                <li>
+                    Officer assignment and response tracking
+                </li>
+
+                <li>
+                    Incident lifecycle management
+                </li>
+
+                <li>
+                    Administrative statistics
+                </li>
+
+                <li>
+                    Cloud-hosted PostgreSQL database
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= CTA ================= -->
+
+<section class="cta">
+
+    <h2>
+        Need help on campus?
+    </h2>
+
 
     <p>
-        Smart campus emergency assistance and incident management system.
+        Report an incident through CampusShield
+        and allow the response team to track it
+        from reporting to resolution.
     </p>
 
-    <a href="/report" class="button">Report an Incident</a>
-</div>
+
+    <a href="/report" class="cta-btn">
+        Report an Incident
+    </a>
+
+</section>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <strong>
+        CampusShield
+    </strong>
+
+    · Smart Campus Emergency Assistance and Incident Management System
+
+    <br><br>
+
+    College of Engineering, Guindy · Anna University
+
+</footer>
+
 
 </body>
+
 </html>

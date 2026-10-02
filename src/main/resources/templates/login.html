@@ -1,125 +1,646 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Login - CampusShield</title>
+    <title>Login | CampusShield</title>
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
+            min-height: 100vh;
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #11151a 0%,
+                    #171c22 55%,
+                    #202832 100%
+                );
+
+            color: #1b2028;
+
+            display: flex;
+            flex-direction: column;
         }
+
+        /* ================= NAVBAR ================= */
 
         .navbar {
-            background: #12355b;
+            height: 74px;
+
+            padding: 0 7%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            background: #11151a;
+
             color: white;
-            padding: 18px 50px;
-            font-size: 24px;
-            font-weight: bold;
+
+            border-bottom: 1px solid #292f37;
         }
 
-        .container {
-            width: 420px;
-            margin: 70px auto;
-            background: white;
-            padding: 35px;
+        .brand {
+            display: flex;
+            align-items: center;
+
+            gap: 12px;
+
+            font-size: 21px;
+            font-weight: 800;
+        }
+
+        .shield {
+            width: 38px;
+            height: 38px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #e53935;
+
+            color: white;
+
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+
+            font-size: 14px;
+            font-weight: 900;
         }
 
-        h1 {
-            color: #12355b;
-            text-align: center;
-            margin-bottom: 30px;
+        .back-home {
+            color: #aeb7c3;
+
+            text-decoration: none;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+        .back-home:hover {
+            color: white;
+        }
+
+        /* ================= MAIN ================= */
+
+        .page {
+            flex: 1;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 50px 20px;
+        }
+
+        .login-wrapper {
+            width: 100%;
+            max-width: 920px;
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            background: white;
+
+            border-radius: 18px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 25px 70px rgba(0, 0, 0, 0.35);
+        }
+
+        /* ================= LEFT PANEL ================= */
+
+        .info-panel {
+            padding: 55px 45px;
+
+            background: #171c22;
+
+            color: white;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .info-label {
+            color: #ff625e;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            margin-bottom: 18px;
+        }
+
+        .info-panel h1 {
+            margin: 0;
+
+            font-size: 38px;
+
+            line-height: 1.1;
+
+            letter-spacing: -1px;
+        }
+
+        .info-panel h1 span {
+            color: #ff514c;
+        }
+
+        .info-panel p {
+            margin-top: 20px;
+
+            color: #aeb7c3;
+
+            font-size: 15px;
+
+            line-height: 1.7;
+        }
+
+        .features {
+            margin-top: 28px;
+        }
+
+        .feature {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin: 15px 0;
+
+            color: #d8dee6;
+
+            font-size: 14px;
+        }
+
+        .feature-icon {
+            width: 30px;
+            height: 30px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #252c34;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+        }
+
+        /* ================= LOGIN CARD ================= */
+
+        .login-panel {
+            padding: 55px 45px;
+
+            background: white;
+        }
+
+        .login-panel h2 {
+            margin: 0;
+
+            color: #171c23;
+
+            font-size: 30px;
+
+            letter-spacing: -0.5px;
+        }
+
+        .subtitle {
+            margin-top: 8px;
+
+            color: #7a8491;
+
+            font-size: 14px;
+        }
+
+        /* ================= FORM ================= */
+
+        form {
+            margin-top: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
         }
 
         label {
             display: block;
-            margin-top: 18px;
-            margin-bottom: 6px;
-            font-weight: bold;
+
+            margin-bottom: 8px;
+
+            color: #303741;
+
+            font-size: 13px;
+
+            font-weight: 700;
         }
 
         input {
             width: 100%;
-            padding: 12px;
-            box-sizing: border-box;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            font-size: 15px;
+
+            padding: 13px 14px;
+
+            border: 1px solid #d6dce3;
+
+            border-radius: 8px;
+
+            background: #fafbfc;
+
+            color: #171c23;
+
+            font-size: 14px;
+
+            outline: none;
+
+            transition: 0.2s;
         }
+
+        input::placeholder {
+            color: #9aa3ae;
+        }
+
+        input:focus {
+            border-color: #3b82f6;
+
+            background: white;
+
+            box-shadow:
+                0 0 0 3px rgba(59, 130, 246, 0.10);
+        }
+
+        /* ================= BUTTON ================= */
 
         button {
             width: 100%;
-            margin-top: 25px;
+
+            margin-top: 5px;
+
             padding: 14px;
-            background: #12355b;
-            color: white;
+
             border: none;
-            border-radius: 6px;
-            font-size: 16px;
+
+            border-radius: 8px;
+
+            background: #e53935;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
             cursor: pointer;
+
+            transition: 0.2s;
+
+            box-shadow:
+                0 7px 18px rgba(229, 57, 53, 0.18);
         }
 
         button:hover {
-            background: #0d2845;
+            background: #f04440;
+
+            transform: translateY(-1px);
         }
 
+        /* ================= REGISTER ================= */
+
         .register-link {
+            margin-top: 25px;
+
+            padding-top: 22px;
+
+            border-top: 1px solid #edf0f3;
+
             text-align: center;
-            margin-top: 20px;
+
+            color: #7a8491;
+
+            font-size: 13px;
         }
 
         .register-link a {
-            color: #12355b;
+            color: #e53935;
+
             text-decoration: none;
+
+            font-weight: 700;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* ================= SECURITY NOTE ================= */
+
+        .security-note {
+            margin-top: 20px;
+
+            padding: 11px 13px;
+
+            background: #f4f7fa;
+
+            border-radius: 7px;
+
+            color: #697482;
+
+            font-size: 11px;
+
+            line-height: 1.5;
+
+            text-align: center;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            padding: 20px;
+
+            background: #11151a;
+
+            color: #737d89;
+
+            text-align: center;
+
+            font-size: 11px;
+        }
+
+        footer strong {
+            color: #dce1e7;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 750px) {
+
+            .login-wrapper {
+                grid-template-columns: 1fr;
+
+                max-width: 480px;
+            }
+
+            .info-panel {
+                padding: 35px;
+
+                text-align: center;
+            }
+
+            .features {
+                display: none;
+            }
+
+            .login-panel {
+                padding: 40px 30px;
+            }
+
+            .info-panel h1 {
+                font-size: 32px;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .navbar {
+                padding: 0 5%;
+            }
+
+            .page {
+                padding: 30px 15px;
+            }
+
+            .info-panel {
+                padding: 30px 25px;
+            }
+
+            .login-panel {
+                padding: 35px 25px;
+            }
         }
     </style>
 </head>
 
+
 <body>
 
-<div class="navbar">
-    CampusShield
-</div>
 
-<div class="container">
+<!-- ================= NAVBAR ================= -->
 
-    <h1>Login</h1>
+<nav class="navbar">
 
-    <form action="/login" method="POST">
+    <div class="brand">
 
-        <label for="email">Email</label>
+        <div class="shield">
+            CS
+        </div>
 
-        <input type="email"
-               id="email"
-               name="email"
-               placeholder="Enter your email"
-               required>
+        CampusShield
 
-        <label for="password">Password</label>
-
-        <input type="password"
-               id="password"
-               name="password"
-               placeholder="Enter your password"
-               required>
-
-        <button type="submit">
-            Login
-        </button>
-
-    </form>
-
-    <div class="register-link">
-        Don't have an account?
-        <a href="/register">Create Account</a>
     </div>
 
-</div>
+
+    <a href="/" class="back-home">
+        ← Back to Home
+    </a>
+
+</nav>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="page">
+
+    <div class="login-wrapper">
+
+
+        <!-- LEFT INFORMATION PANEL -->
+
+        <section class="info-panel">
+
+            <div class="info-label">
+                CAMPUS SAFETY PLATFORM
+            </div>
+
+
+            <h1>
+                Welcome back.<br>
+                <span>Stay connected.</span>
+            </h1>
+
+
+            <p>
+                Access CampusShield to report incidents,
+                track emergency responses and stay informed
+                about campus conditions.
+            </p>
+
+
+            <div class="features">
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        🚨
+                    </div>
+
+                    Report and track incidents
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        👮
+                    </div>
+
+                    Coordinate officer response
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        🌦️
+                    </div>
+
+                    View live campus weather
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        🔐
+                    </div>
+
+                    Secure account access
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- LOGIN PANEL -->
+
+        <section class="login-panel">
+
+            <h2>
+                Sign in
+            </h2>
+
+            <div class="subtitle">
+                Enter your CampusShield account details.
+            </div>
+
+
+            <form action="/login" method="POST">
+
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email Address
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        placeholder="you@example.com"
+                        autocomplete="email"
+                        required>
+
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required>
+
+                </div>
+
+
+
+                <button type="submit">
+                    Sign In
+                </button>
+
+
+            </form>
+
+
+            <div class="security-note">
+                🔒 Your password is securely protected using
+                BCrypt password hashing.
+            </div>
+
+
+            <div class="register-link">
+
+                Don't have an account?
+
+                <a href="/register">
+                    Create an Account
+                </a>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <strong>CampusShield</strong>
+    · College of Engineering, Guindy · Anna University
+
+</footer>
+
 
 </body>
+
 </html>
